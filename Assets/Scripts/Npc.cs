@@ -3,13 +3,17 @@ using System.Collections;
 
 public class Npc : MonoBehaviour {
 	
-	private Color initHeadColor;
-	private bool smiling;
-	private float cooldownTime = 5.0f;
+	public Color initHeadColor;
+	public bool smiling;
+	public float cooldownTime = 5.0f;
+	
+	public GameObject npc;
+	public GameObject head;
+	
 	
 	// Use this for initialization
 	void Start () {
-		initHeadColor = this.gameObject.transform.Find("Sphere").renderer.material.color;
+		initHeadColor = new Color(0.745098f,0.745098f,0.745098f,1);
 	}
 	
 	// Update is called once per frame
@@ -22,7 +26,7 @@ public class Npc : MonoBehaviour {
 			CharacterControl playerCtrl = player.GetComponent<CharacterControl>();
 			if(playerCtrl.smiling && cooldownTime <= 0.0f)
 			{
-				Instantiate (this,
+				Instantiate (npc,
 					new Vector3(transform.position.x + 4.0f, transform.position.y, transform.position.z),
 					Quaternion.identity);
 				cooldownTime = 5.0f;
@@ -51,18 +55,18 @@ public class Npc : MonoBehaviour {
 	
 	void Smile()
 	{
-		Material head = this.gameObject.transform.Find("Sphere").renderer.material;
+		Material mat = head.renderer.material;
 		
-		head.color = Color.magenta;
+		mat.color = Color.magenta;
 		smiling = true;
 		// Debug.Log("Smiling");
 	}
 	
 	void UnSmile()
 	{
-		Material head = this.gameObject.transform.Find("Sphere").renderer.material;
+		Material mat = head.renderer.material;
 		
-		head.color = initHeadColor;
+		mat.color = initHeadColor;
 		smiling = false;
 		// Debug.Log("Not Smiling");
 	}
